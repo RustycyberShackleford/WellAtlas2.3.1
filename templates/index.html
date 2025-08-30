@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div id="map" style="height:600px;"></div>
-<button onclick="locateMe()">Find Sites Near Me</button>
+<button onclick="CenterOnLocation()">Find Sites Near Me</button>
 <script>
-  var map = L.map('map').setView([39.728, -121.837], 9);
-  L.tileLayer('https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=get_your_own', {
+  var map = L.map('map').setView([39.7, -122.0], 9); 
+  L.tileLayer('https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=te2uVUS5OQ34IWqivjVu', {
     attribution: '© MapTiler'
   }).addTo(map);
 
