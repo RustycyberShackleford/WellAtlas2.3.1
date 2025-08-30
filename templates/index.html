@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="map" style="height:600px;"></div>
+<button onclick="locateMe()">Find Sites Near Me</button>
+<script>
+  var map = L.map('map').setView([39.728, -121.837], 9);
+  L.tileLayer('https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=get_your_own', {
+    attribution: '© MapTiler'
+  }).addTo(map);
+
+  var sites = {{ sites|tojson }};
+  sites.forEach(s => {
+    var marker = L.marker([s.latitude, s.longitude]).addTo(map);
+    marker.bindPopup(`<b>${s.customer.name}</b><br>${s.name}<br><a href="/sites/${s.id}">View Site</a>`);
+  });
+
+  function locateMe(){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(pos=>{
+        map.setView([pos.coords.latitude,pos.coords.longitude], 12);
+        fetch("/nearby",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({lat:pos.coords.latitude,lng:pos.coords.longitude})
+        }).then(r=>r.json()).then(data=>{
+          console.log("Nearby sites:",data);
+        });
+      });
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ site.name }}</h2>
+<p>Customer: {{ site.customer.name }}</p>
+<h3>Jobs</h3>
+<ul>
+{% for j in site.jobs %}
+  <li><a href="{{ url_for('view_job', job_id=j.id) }}">{{ j.name }} ({{ j.category }})</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
